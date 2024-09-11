@@ -1,0 +1,43 @@
+body{
+    font-family: sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100vw;
+    height: auto;
+}
+
+.container {
+    width: auto;
+    height: auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.cell{
+    display: flex;
+    color: black;
+    background-color: aquamarine;
+    border: 2px solid black;
+    justify-content: center;
+    align-items: center;
+    width: 200px;
+    height: 200px;
+    font-size: 144px;
+}
+
+.cell.top{
+    border-top: none;
+}
+
+.cell.bottom{
+    border-bottom: none;
+}
+
+.cell.left{
+    border-left: none;
+}
+
+.cell.right{
+    border-right: none;
+}
