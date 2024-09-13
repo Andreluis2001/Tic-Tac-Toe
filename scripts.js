@@ -45,8 +45,8 @@ function gameOver(buttons) {
 
 function setGame() {
     const gameboard = Gameboard();
-    const player1 = Player(document.querySelector('#Player-1').text);
-    const player2 = Player(document.querySelector('#Player-2').text);
+    const player1 = Player(document.querySelector('#Player-1').value);
+    const player2 = Player(document.querySelector('#Player-2').value);
     return { player1, player2, gameboard };
 }
 
@@ -81,4 +81,7 @@ function TicTacToe() {
     }
 }
 
-TicTacToe();
+const start = document.querySelector('#startGame');
+start.addEventListener('click', () => {
+    TicTacToe();
+});
