@@ -3,6 +3,18 @@ function Gameboard() {
     return { board };
 }
 
+function addToBoard(game, cells, index) {
+    if (index < 3) {
+        game.gameboard.board[0][index] = cells[index].textContent;
+    }
+    else if (index < 6) {
+        game.gameboard.board[1][index - 3] = cells[index].textContent;
+    }
+    else {
+        game.gameboard.board[2][index - 6] = cells[index].textContent;
+    }
+}
+
 function Player(name) {
     return { name };
 }
@@ -24,36 +36,49 @@ function checkWin(board) {
     return false;
 }
 
-function TicTacToe() {
-    const gameboard = Gameboard();
-    const player1 = Player("Player 1");
-    const player2 = Player("Player 2");
-    let gameOver = false;
-    let timesPlayed = 0;
-    while (!gameOver && timesPlayed < 9) {
-        if (checkWin(gameboard.board)) {
-            console.log(`${currentPlayer.name} wins!`);
-            gameOver = true;
-        }
-        timesPlayed++;
+function gameOver(buttons) {
+    for (let i = 0; i < buttons.length; i++) {
+        buttons[i].disabled = true;
     }
-    return {player1, player2, gameboard};
+
 }
 
-const game = TicTacToe();
-let currentPlayer = game.player1;
-
-const cells = document.querySelectorAll('.cell');
-for (let i = 0; i < cells.length; i++) {
-    cells[i].addEventListener('click', () => {
-        if(currentPlayer === game.player1){
-            cells[i].textContent = 'X';
-            currentPlayer = game.player2;
-        }
-        else{
-            cells[i].textContent = 'O';
-            currentPlayer = game.player1;
-        }
-        cells[i].disabled = true;
-    });
+function setGame() {
+    const gameboard = Gameboard();
+    const player1 = Player(document.querySelector('#Player-1').text);
+    const player2 = Player(document.querySelector('#Player-2').text);
+    return { player1, player2, gameboard };
 }
+
+
+function TicTacToe() {
+    const game = setGame();
+    let currentPlayer = game.player1;
+
+    const cells = document.querySelectorAll('.cell');
+    for (let i = 0; i < cells.length; i++) {
+        cells[i].addEventListener('click', () => {
+            if (currentPlayer === game.player1) {
+                cells[i].textContent = 'X';
+                addToBoard(game, cells, i);
+                if (checkWin(game.gameboard.board)) {
+                    console.log(`${currentPlayer.name} wins!`);
+                    gameOver(cells);
+                }
+                currentPlayer = game.player2;
+            }
+            else {
+                cells[i].textContent = 'O';
+                addToBoard(game, cells, i);
+                if (checkWin(game.gameboard.board)) {
+                    console.log(`${currentPlayer.name} wins!`);
+                    gameOver(cells);
+                }
+                currentPlayer = game.player1;
+            }
+            cells[i].disabled = true;
+        });
+    }
+}
+
+TicTacToe();
